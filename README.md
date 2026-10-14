@@ -33,8 +33,7 @@ Keyboard:
 [current work in progress will work later. Operator keys and number keys will work]
 
 ## Project Files
-[Identify the main sketch and other tabs or assets
-you will upload.]
+[Calculator is main file and button is the class]
 
 ## Testing
 [Record one test: input 1+1, expected result 2,
