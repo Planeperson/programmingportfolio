@@ -68,6 +68,9 @@ void updateDisplay() {
   // overlay text
   fill(0);
   textAlign(RIGHT);
+  if (displayVal.length()>12) {
+    textSize(32);
+  }
   text(displayVal, width-60, 27.5);
 }
 
@@ -214,13 +217,132 @@ void performCalc() {
 }
 
 void keyPressed() {
-  if (key == '1') {
-    println("you hit 1"+keyCode);
-    handleEvent('1', true);
-  }  else if (key == '2' || keycod == 99) {
-    println("you hit 2"+keyCode);
-    handleEvent('2', true);
+  // Pass numerical keys (0-9)
+  if (key >= '0' && key <= '9') {
+    handleInput(key);
+  } 
+  // Pass basic arithmetic operators and actions
+  else if (key == '+' || key == '-' || key == '*' || key == '/' || key == '%') {
+    // Map '*' to 'x' and '/' to '÷' to match your display symbols
+    if (key == '*') handleInput('x');
+    else if (key == '/') handleInput('÷');
+    else handleInput(key);
+  } 
+  // Handle Enter/Return for calculation
+  else if (key == ENTER || key == RETURN || key == '=') {
+    handleInput('=');
+  } 
+  // Handle Backspace for deleting single digits
+  else if (key == BACKSPACE) {
+    handleInput('⌫');
+  } 
+  // Handle Clear using 'c', 'C', or ESC key
+  else if (key == 'c' || key == 'C' || key == ESC) {
+    key = 0; // Prevent Processing from quitting when ESC is pressed
+    handleInput('C');
+  } 
+  // Handle Decimal point
+  else if (key == '.') {
+    handleInput('.');
   }
+}
+
+// Single handler function that processes actions from both mouse clicks and keyboard key presses
+void handleInput(char clicked) {
+  if (clicked >= '0' && clicked <= '9') {
+    String digit = str(clicked);
+
+    if (newEntry || displayVal.equals("0.0")) {
+      displayVal = digit;
+      newEntry = false;
+    } else {
+      displayVal += digit;
+    }
+    
+    if (left) {
+      l = float(displayVal);
+    } else {
+      r = float(displayVal);
+    }
+  } else if (clicked == '=') {
+    performCalc();
+  } else if (clicked == 'C') {
+    displayVal = "0.0";
+    l = 0.0;
+    r = 0.0;
+    result = 0.0;
+    op = ' ';
+    newEntry = true;
+    left = true;
+  } else if (clicked == '√') {
+    if (left) {
+      l = sqrt(l);
+      displayVal = str(l);
+    } else {
+      r = sqrt(r);
+      displayVal = str(r);
+    }
+  } else if (clicked == '^') {
+    if (left) {
+      l = sq(l);
+      displayVal = str(l);
+    } else {
+      r = sq(r);
+      displayVal = str(r);
+    }
+  } else if (clicked == '.') {
+    if (!displayVal.contains(".")) {
+      if (left) {
+        displayVal += ".";
+        l = float(displayVal);
+      } else {
+        displayVal += ".";
+        r = float(displayVal);
+      }
+    }
+  } else if (clicked == '+' || clicked == '-' || clicked == 'x' || clicked == '÷') {
+    op = clicked;
+    left = false;
+    newEntry = true;
+    displayVal = str(op);
+  } else if (clicked == '±') {
+    if (!displayVal.equals("0.0") && !displayVal.equals("0")) {
+      if (displayVal.startsWith("-")) {
+        displayVal = displayVal.substring(1);
+      } else {
+        displayVal = "-" + displayVal;
+      }
+      if (left) {
+        l = float(displayVal);
+      } else {
+        r = float(displayVal);
+      }
+    }
+  } else if (clicked == '⌫') {
+    if (displayVal.length() > 1) {
+      displayVal = displayVal.substring(0, displayVal.length() - 1);
+      if (displayVal.equals("-")) {
+        displayVal = "0.0";
+      }
+    } else {
+      displayVal = "0.0";
+    }
+
+    if (left) {
+      l = float(displayVal);
+    } else {
+      r = float(displayVal);
+    }
+  } else if (clicked == '%') {
+    float val = float(displayVal) / 100.0;
+    displayVal = str(val);
+    if (left) {
+      l = val;
+    } else {
+      r = val;
+    }
+  }
+  printState();
 }
 
 void handleEvent(char val, boolean isNum) {
