@@ -4,7 +4,6 @@
  #00AEB8
  #00B807
  #0074B8
- precentange delete one digit and +or- symbol does not work
  */
 String displayVal;
 float l, r, result;
