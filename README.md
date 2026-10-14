@@ -13,37 +13,35 @@
 
 ## Current Status
 Working:
-- [A feature you have tested]
-- [Another feature you have tested]
+- [can calculate]
+- [can do square root]
 
 Still in progress:
-- [A requirement you are finishing]
+- [using keyboard to calculate]
 
 ## How to Run
 Built with Processing.
-Processing version: [Your version]
+Processing version: [4.0.1]
 
-[After the project files are uploaded, identify the
-project folder and main .pde file to open and run.]
+
 
 ## Controls
 Mouse:
-[Explain how to use the buttons.]
+[press buttons]
 
 Keyboard:
-[List keys that currently work and what they do.
-Identify planned controls as not yet implemented.]
+[current work in progress will work later. Operator keys and number keys will work]
 
 ## Project Files
 [Identify the main sketch and other tabs or assets
 you will upload.]
 
 ## Testing
-[Record one test: actions, expected result,
-and actual result.]
+[Record one test: input 1+1, expected result 2,
+and actual result 2.]
 
 ## Next Step
-[Name the specific behavior you will build or fix next.]
+[work on the keyboard stuff]
 
 ![Calculator2026](https://github.com/Planeperson/programmingportfolio/blob/main/images/calc2026.png?raw=true)
 
